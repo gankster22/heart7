@@ -1,0 +1,70 @@
+def check_password(username: str, password: str)-> bool:
+    '''
+    Verify the authentication of the user
+    if <username>.txt does not exist, return False
+    if password does not match the first line in <username>.txt, return False
+    if password matches the first line in <username>.txt, return True
+    Error/successful message during the verification must 
+    also be printed in this function
+    
+    
+    @parameters
+    - username: the input username
+    - password: the input password
+
+    @returns
+    - bool: whether the password and username are correct
+    '''
+    try:
+
+        with open('akali.txt', 'r') as obj:
+            stored_password = obj.readline().strip()
+        # Check if the password matches
+        if stored_password == password:
+            print("Login successful :))")
+            return True
+        else:
+            print("Username and password do not match :((")
+            return False
+    except FileNotFoundError:
+        # Handle the case where the username file does not exist
+        print(f"No {username} found :((")
+        return False
+        
+
+
+
+
+def main():
+    '''
+    Where your main program will be run
+    '''
+    # Display the welcoming message
+    print("Welcome to USYD MUSIC!")
+
+    #Initialize attempt counter
+    attempts = 0
+
+    #Setting the max attempt
+    max_attempt = 3
+
+
+    # Run the loop to prompt for username and password
+    while attempts < max_attempt:
+        # Prompt for username and password
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+
+        # Check if the password is correct
+        if check_password(username,password):
+            break # Exit if login is successful
+        
+        # Increment attempt counter
+        attempts += 1
+
+        if attempts == max_attempt:
+            print("Maximum of 3 attempts has been reached. You will be temporarily disabled from logginng in :((")
+
+
+if __name__ == '__main__':
+    main()
